@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>odkosCV | Анкет</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-text: #6b7280;
+            --background: #f3f4f6;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --spacing: 1.5rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            background-color: var(--card-bg);
+            padding: var(--spacing);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: var(--spacing);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--primary-color);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: var(--light-text);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary-color);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .skill-item {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .edit-buttons {
+            display: none;
+        }
+
+        .show-edit-buttons .edit-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-save {
+            background-color: #10b981;
+            color: white;
+            display: none;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .editable {
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .editing {
+            border: 2px solid var(--primary-color);
+            background-color: #f8fafc;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .education-item, .experience-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .education-item h3, .experience-item h3 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-list {
+            list-style: none;
+        }
+
+        .achievement-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .achievement-list li::before {
+            content: "🏆";
+            position: absolute;
+            left: 0;
+        }
+
+        .language-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .language-item::before {
+            content: "🌐";
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Top Edit Button Styles */
+        .top-edit-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-edit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .top-edit-btn i {
+            font-size: 1rem;
+        }
+
+        /* Simplified Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: var(--card-bg);
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .password-input {
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        /* Save Changes Button */
+        .save-changes-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .save-changes-btn:hover {
+            background-color: #059669;
+            transform: translateY(-1px);
+        }
+
+        .edit-mode {
+            border: none;
+        }
+
+        /* Add a subtle indicator for editable areas in edit mode */
+        .show-edit-buttons .editable:hover {
+            background-color: #f0f9ff;
+            border-radius: 4px;
+        }
+
+        /* Add branding styles */
+        .branding {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: var(--light-text);
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 1000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .branding i {
+            color: var(--primary-color);
+        }
+
+        .branding:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Edit Button -->
+    <button class="top-edit-btn" onclick="showLoginModal()">
+        <i class="fas fa-edit"></i> Засах
+    </button>
+
+    <!-- Save Changes Button -->
+    <button class="save-changes-btn" onclick="saveAllChanges()">
+        <i class="fas fa-save"></i> Хадгалах
+    </button>
+
+    <div class="container">
+        <div class="grid">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="profile-image">
+                    <img src="images/profile.jpg" alt="С.Одбаяр">
+                </div>
+                <div class="section-header">
+                    <h1 id="name" class="editable">С.Одбаяр</h1>
+                    <div class="edit-buttons">
+                        <button class="btn btn-edit" onclick="toggleEdit('name')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-save" onclick="saveContent('name')">
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="section-header">
+                    <p id="title" class="subtitle editable">Их засаг их сургууль | 3-р курсын оюутан</p>
+                    <div class="edit-buttons">
+                        <button class="btn btn-edit" onclick="toggleEdit('title')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-save" onclick="saveContent('title')">
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contact Info with edit buttons -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-address-card"></i>
+                            Холбоо барих
+                        </h2>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span id="phone" class="editable">9999999</span>
+                            <div class="edit-buttons">
+                                <button class="btn btn-edit" onclick="toggleEdit('phone')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-save" onclick="saveContent('phone')">
+                                    <i class="fas fa-save"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span id="email" class="editable">odbayar@gmail.com</span>
+                            <div class="edit-buttons">
+                                <button class="btn btn-edit" onclick="toggleEdit('email')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-save" onclick="saveContent('email')">
+                                    <i class="fas fa-save"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+        <!-- Main Content -->
+            <main class="main-content">
+                <!-- About Me with edit buttons -->
+                <section class="card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-user"></i>
+                            Хувийн мэдээлэл
+                        </h2>
+                        <div class="edit-buttons">
+                            <button class="btn btn-edit" onclick="toggleEdit('aboutMe')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-save" onclick="saveContent('aboutMe')">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </div>
+                </div>
+                    <p id="aboutMe" class="editable">Би Орхон аймгийн 1-р сургуулийг төгссөн бөгөөд одоо Их засаг их сургуульд 3-р курст суралцаж байна. Волейболын 1-р зэрэгтэй, Мэлхийн ордны харьяат. Би олон талын авьяас чадвартай, тууштай, бүтээн байгуулалтад залуу үран бүтээлч бөгөөд манлайлах чадвартай.</p>
+            </section>
+
+                <!-- Skills -->
+                <section class="card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-tools"></i>
+                            Ур чадварууд
+                        </h2>
+                        <div class="edit-buttons">
+                            <button class="btn btn-edit" onclick="toggleEdit('skillsList')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-save" onclick="saveContent('skillsList')">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <ul id="skillsList" class="skills-list editable">
+                        <li class="skill-item">Python програмчлал</li>
+                        <li class="skill-item">Web хөгжүүлэлт</li>
+                        <li class="skill-item">Adobe Photoshop</li>
+                        <li class="skill-item">3D загварчлал</li>
+                        <li class="skill-item">Видео засварлалт</li>
+                        <li class="skill-item">Роботын програмчлал</li>
+                        <li class="skill-item">Дрон нисгэгч</li>
+                        <li class="skill-item">Гэрэл зургийн урлаг</li>
+                        <li class="skill-item">AI судалгаа</li>
+                    </ul>
+                </section>
+
+                <!-- Education -->
+                <section class="card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-graduation-cap"></i>
+                            Боловсрол
+                        </h2>
+                        <div class="edit-buttons">
+                            <button class="btn btn-edit" onclick="toggleEdit('educationList')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-save" onclick="saveContent('educationList')">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="educationList" class="editable">
+                        <div class="education-item">
+                            <h3>Их засаг их сургууль</h3>
+                            <p>Мэдээллийн технологийн тэнхим | 3-р курсын оюутан</p>
+                            <p>Голч дүн: 3.8/4.0</p>
+                        </div>
+                        <div class="education-item">
+                            <h3>Улаанбаатар хотын Шинжлэх ухаан технологийн сургууль</h3>
+                            <p>Бүрэн дунд боловсрол | Математик, Физикийн гүнзгийрүүлсэн анги</p>
+                            <p>Төгссөн он: 2021</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Experience -->
+                <section class="card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-briefcase"></i>
+                            Туршлага
+                        </h2>
+                        <div class="edit-buttons">
+                            <button class="btn btn-edit" onclick="toggleEdit('experienceList')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-save" onclick="saveContent('experienceList')">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="experienceList" class="editable">
+                        <div class="experience-item">
+                            <h3>Artificial Intelligence Research Institute</h3>
+                            <p>Судалгааны туслах</p>
+                            <ul>
+                                <li>Хиймэл оюун ухааны судалгааны төсөл</li>
+                                <li>Машин сургалтын загваруудын хөгжүүлэлт</li>
+                                <li>Өгөгдлийн шинжилгээ</li>
+                            </ul>
+                        </div>
+                        <div class="experience-item">
+                            <h3>Tech Innovation Hub</h3>
+                            <p>Програм хангамжийн хөгжүүлэгч</p>
+                            <ul>
+                                <li>Веб аппликэйшн хөгжүүлэлт</li>
+                                <li>UI/UX дизайн</li>
+                                <li>Системийн архитектур</li>
+                            </ul>
+                        </div>
+                        <div class="experience-item">
+                            <h3>Startup Weekend Ulaanbaatar</h3>
+                            <p>Багийн ахлагч</p>
+                            <ul>
+                                <li>Инновацийн төслийн удирдлага</li>
+                                <li>Бизнес төлөвлөгөө боловсруулалт</li>
+                                <li>Хөрөнгө оруулагчидтай харилцах</li>
+                            </ul>
+                        </div>
+                        <div class="experience-item">
+                            <h3>Digital Art Studio</h3>
+                            <p>3D загвар дизайнер</p>
+                            <ul>
+                                <li>3D загварчлал ба анимэйшн</li>
+                                <li>Виртуал бодит орчны загвар</li>
+                                <li>Тоглоомын ассет бүтээх</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Simplified Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Админ нэвтрэх</h2>
+            <form id="passwordForm" class="password-form">
+                <input type="password" id="adminPassword" class="password-input" placeholder="Нууц үг" required>
+                <button type="submit" class="login-btn">Нэвтрэх</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add branding -->
+    <a href="#" class="branding">
+        <i class="fas fa-code"></i>
+        odkosCV
+    </a>
+
+    <script>
+        const ADMIN_PASSWORD = 'admin123';
+        let isEditMode = false;
+
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function hideLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function enableEditMode() {
+            isEditMode = true;
+            document.body.classList.add('show-edit-buttons');
+            document.querySelectorAll('.editable').forEach(element => {
+                element.contentEditable = true;
+            });
+            document.querySelector('.save-changes-btn').style.display = 'flex';
+            document.querySelector('.top-edit-btn').style.display = 'none';
+            showNotification('Засвар хийх боломжтой болсон!');
+        }
+
+        function disableEditMode() {
+            isEditMode = false;
+            document.body.classList.remove('show-edit-buttons');
+            document.querySelectorAll('.editable').forEach(element => {
+                element.contentEditable = false;
+            });
+            document.querySelector('.save-changes-btn').style.display = 'none';
+            document.querySelector('.top-edit-btn').style.display = 'flex';
+        }
+
+        function saveAllChanges() {
+            const editableElements = document.querySelectorAll('.editable');
+            editableElements.forEach(element => {
+                if (element.id) {
+                    const content = element.innerHTML;
+                    localStorage.setItem(element.id, content);
+                }
+            });
+            disableEditMode();
+            showNotification('Бүх өөрчлөлт амжилттай хадгалагдлаа!');
+        }
+
+        function loadContent() {
+            const editableElements = document.querySelectorAll('.editable');
+            editableElements.forEach(element => {
+                if (element.id) {
+                    const savedContent = localStorage.getItem(element.id);
+                    if (savedContent) {
+                        element.innerHTML = savedContent;
+                    }
+                }
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#10b981';
+            notification.style.color = 'white';
+            notification.style.padding = '1rem';
+            notification.style.borderRadius = '6px';
+            notification.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            notification.style.zIndex = '2000';
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Event Listeners
+        document.getElementById('passwordForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                hideLoginModal();
+                enableEditMode();
+            } else {
+                showNotification('Буруу нууц үг!');
+            }
+        });
+
+        // Load content when page loads
+        window.addEventListener('load', () => {
+            loadContent();
+            disableEditMode();
+        });
+
+        // Handle clicking outside of modal
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                hideLoginModal();
+            }
+        });
+    </script>
+</body>
+</html> 
